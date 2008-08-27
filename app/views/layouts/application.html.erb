@@ -1,0 +1,14 @@
+<html>
+<head>
+<%= javascript_include_tag :defaults %>
+</head>
+<body>
+<%if logged_in? %>
+  Current User : <%=h current_user.login %>
+                 <%= link_to '[logout]', logout_path %>
+<%else%>
+  Not Logged In <%= link_to '[login]', login_path %>
+<%end%>
+<%= yield %>
+</body>
+</html>

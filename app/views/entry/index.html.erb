@@ -1,0 +1,103 @@
+<script language="javascript">
+var calc_sum = 0;
+var calc_show = 0;
+var calc_clear_flag = false;
+var calc_current_operator = null;
+$(function() {
+  $('.calc_buttons').click(on_calc_button_click);
+});
+
+function on_calc_button_click() {
+  var id = $(this).attr('id');
+  var btn = id.split(/^calc_button_/).join('');
+  if (calc_clear_flag) {
+    calc_show = 0;
+    calc_clear_flag = false;
+  }
+  switch (btn) {
+    case 'c':
+      calc_show = 0;
+      calc_sum = 0;
+    break;
+    case 'eq':
+      calc_show = calc_sum;
+    break;
+    case 'add': case 'sub': case 'mul': case 'div':
+      calc_current_operator = btn;
+      update_operation();
+    break;
+    case '0': case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9':
+      calc_show *= 10;
+      calc_show -= - btn;
+    break;
+  }
+  redraw_price();
+}
+
+function update_operation() {
+  var done = false;
+  switch (calc_current_operator) {
+    case 'add':
+      calc_sum += calc_show;
+      done = true;
+    break;
+    case 'sub':
+      calc_sum -= calc_show;
+      done = true;
+    break;
+    case 'mul':
+      calc_sum *= calc_show;
+      done = true;
+    break;
+    case 'div':
+      calc_sum /= calc_show;
+      done = true;
+    break;
+  }
+  if (done) {
+    calc_show = calc_sum;
+    calc_clear_flag = true;
+  }
+}
+
+function redraw_price() {
+  $('#entry_price').val(calc_show);
+}
+
+</script>
+<h1>Entry#index</h1>
+<div>
+<% form_for :entry, :url=>{:action=>'create'} do |f| -%>
+price <%= f.text_field :price %>
+<%= button_to_function 'calc', 'toggle_calc' %>
+<div id="calc_box">
+<table>
+<tr>
+<td><input type="button" class="calc_buttons" id="calc_button_c" value="C"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_div" value="/"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_mul" value="*"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_sub" value="-"/></td>
+</tr>
+<tr>
+<td><input type="button" class="calc_buttons" id="calc_button_7" value="7"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_8" value="8"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_9" value="9"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_add" value="+"/></td>
+</tr>
+<tr>
+<td><input type="button" class="calc_buttons" id="calc_button_4" value="4"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_5" value="5"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_6" value="6"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_eq" value="="/></td>
+</tr>
+<tr>
+<td><input type="button" class="calc_buttons" id="calc_button_1" value="1"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_2" value="2"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_3" value="3"/></td>
+</tr>
+<td colspan="2"><input type="button" class="calc_buttons" id="calc_button_00" value="00"/></td>
+<td><input type="button" class="calc_buttons" id="calc_button_0" value="0"/></td>
+</div>
+<% end -%>
+</div>

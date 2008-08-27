@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  price: 1
+  comment: MyString
+  checked_at: 2008-08-21 17:04:01
+  entrycategory_id: 1
+  entrysubject_id: 1
+  user_id: 1
+  from_wallet_id: 1
+  to_wallet_id: 1
+
+two:
+  price: 1
+  comment: MyString
+  checked_at: 2008-08-21 17:04:01
+  entrycategory_id: 1
+  entrysubject_id: 1
+  user_id: 1
+  from_wallet_id: 1
+  to_wallet_id: 1
